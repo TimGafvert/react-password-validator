@@ -3,10 +3,12 @@ import "./Validator.css";
 
 class Validator extends Component {
   constructor(props) {
+    let result = "Valid"
     super(props)
     this.state = {email: "", password1: '', password2: '', result: ''}
      this.passwordChanged = this.passwordChanged.bind(this)
      this.password2Changed = this.password2Changed.bind(this)
+     this.checkPassOnSubmit = this.checkPassOnSubmit.bind(this)
   }
 
 
@@ -24,14 +26,19 @@ class Validator extends Component {
 
   checkPassOnSubmit (e) {
     console.log(e.target.value)
-
+    e.preventDefault()
+    if (this.state.password1 === this.state.password2) {
+    this.result = "Valid!"
+  } else {
+    this.result = "Invalid!"
+  }
 
   }
 
 
 
   render() {
-    let result = "Valid!"
+
     return (
       <form>
         <h1>Sign Up</h1>
@@ -39,7 +46,7 @@ class Validator extends Component {
         <input type="password" placeholder="password" onChange={this.passwordChanged}/>
         <input type="password" placeholder="confirm password" onChange={this.password2Changed} />
         <input type="submit" value="Submit" onClick={this.checkPassOnSubmit}/>
-        <p>{result}</p>
+        <p>{this.result}</p>
       </form>
     );
   }
